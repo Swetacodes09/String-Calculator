@@ -1,16 +1,11 @@
-# app/models/string_calculator.rb
-
 class StringCalculator
   def self.Add(numbers)
-
-    if numbers.nil?
-      return 0 
-    end
+    return 0 if numbers.empty?
 
     delimiter = extract_delimiter(numbers)
-    numbers = numbers.split(/#{delimiter}/).last if delimiter.present?
+    numbers = numbers.gsub(/^\/\/\[?.+?\]?$/, '')
     negatives = []
-    sum = numbers.split(/[\n,]/).inject(0) do |sum, num_str|
+    sum = numbers.split(/#{delimiter}|\n/).inject(0) do |sum, num_str|
       num = num_str.to_i
       negatives << num if num.negative?
       num <= 1000 ? sum + num : sum
