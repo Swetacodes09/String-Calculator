@@ -2,9 +2,13 @@
 
 class StringCalculator
   def self.Add(numbers)
+
+    if numbers.nil?
+      return 0 
+    end
+
     delimiter = extract_delimiter(numbers)
     numbers = numbers.split(/#{delimiter}/).last if delimiter.present?
-
     negatives = []
     sum = numbers.split(/[\n,]/).inject(0) do |sum, num_str|
       num = num_str.to_i
