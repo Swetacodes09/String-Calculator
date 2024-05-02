@@ -31,5 +31,17 @@ RSpec.describe StringCalculator do
         expect(StringCalculator.Add("//;\n1;2;3")).to eq(6)
       end
     end
+
+    context 'when given multiple numbers separated by commas' do
+      it 'returns the sum of all numbers' do
+        expect(StringCalculator.Add("1,2,3,4,5")).to eq(15)
+      end
+    end
+
+    context 'when given negative numbers' do
+      it 'throws an exception with the negative number' do
+        expect { StringCalculator.Add("-1,2,-3") }.to raise_error("negatives not allowed: -1, -3")
+      end
+    end
   end
 end
