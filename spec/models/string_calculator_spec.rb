@@ -20,6 +20,16 @@ RSpec.describe StringCalculator do
       end
     end
   
-   
+    context 'when given numbers separated by new lines and commas' do
+      it 'returns the sum of all numbers' do
+        expect(StringCalculator.Add("1\n2,3")).to eq(6)
+      end
+    end
+
+    context 'when given a custom delimiter' do
+      it 'returns the sum of numbers separated by the custom delimiter' do
+        expect(StringCalculator.Add("//;\n1;2;3")).to eq(6)
+      end
+    end
   end
 end
