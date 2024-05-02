@@ -26,12 +26,6 @@ RSpec.describe StringCalculator do
       end
     end
 
-    context 'when given a custom delimiter' do
-      it 'returns the sum of numbers separated by the custom delimiter' do
-        expect(StringCalculator.Add("//;\n1;2;3")).to eq(6)
-      end
-    end
-
     context 'when given multiple numbers separated by commas' do
       it 'returns the sum of all numbers' do
         expect(StringCalculator.Add("1,2,3,4,5")).to eq(15)
@@ -41,6 +35,30 @@ RSpec.describe StringCalculator do
     context 'when given negative numbers' do
       it 'throws an exception with the negative number' do
         expect { StringCalculator.Add("-1,2,-3") }.to raise_error("negatives not allowed: -1, -3")
+      end
+    end
+
+    context 'when given numbers larger than 1000' do
+      it 'ignores numbers larger than 1000' do
+        expect(StringCalculator.Add("2,1001")).to eq(2)
+      end
+    end
+
+    context 'when given custom delimiters of any length' do
+      it 'returns the sum of numbers separated by the custom delimiter' do
+        expect(StringCalculator.Add("//[***]\n1***2***3")).to eq(6)
+      end
+    end
+
+    context 'when given multiple custom delimiters' do
+      it 'returns the sum of numbers separated by any of the custom delimiters' do
+        expect(StringCalculator.Add("//[*][%]\n1*2%3")).to eq(6)
+      end
+    end
+
+    context 'when given multiple custom delimiters of any length' do
+      it 'returns the sum of numbers separated by any of the custom delimiters' do
+        expect(StringCalculator.Add("//[**][%%]\n1**2%%3")).to eq(6)
       end
     end
   end

@@ -5,7 +5,8 @@ class StringCalculator
     delimiter = extract_delimiter(numbers)
     numbers = numbers.gsub(/^\/\/\[?.+?\]?$/, '')
     negatives = []
-    sum = numbers.split(/#{delimiter}|\n/).inject(0) do |sum, num_str|
+    
+    sum = numbers.split(/#{delimiter.map { |d| Regexp.escape(d) }.join('|')}|\n/).inject(0) do |sum, num_str|
       num = num_str.to_i
       negatives << num if num.negative?
       num <= 1000 ? sum + num : sum
@@ -18,7 +19,7 @@ class StringCalculator
   private
 
   def self.extract_delimiter(numbers)
-    delimiter_match = numbers.match(/^\/\/\[?(.+?)\]?$/)
-    delimiter_match ? Regexp.escape(delimiter_match[1]) : ','
-  end
+    delimiter_match = numbers.scan(/\[([^]]+)\]/).flatten
+    delimiter_match.empty? ? [','] : delimiter_match.map { |d| d.gsub(/[\[\]]/, '') }
+  end  
 end
